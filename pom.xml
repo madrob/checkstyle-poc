@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.apache.org/licenses/LICENSE-2.0 -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mdrob</groupId>
+    <artifactId>checkstyle-poc</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.checkstyle.version>2.17</maven.checkstyle.version>
+        <checkstyle.version>6.18</checkstyle.version>
+        <checkstyle.xml>checkstyle.xml</checkstyle.xml>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>checkstyle8</id>
+            <properties>
+                <maven.checkstyle.version>3.0.0</maven.checkstyle.version>
+                <checkstyle.version>8.9</checkstyle.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>separated</id>
+            <properties>
+                <checkstyle.xml>checkstyle-separated.xml</checkstyle.xml>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+      <plugins>
+        <plugin>
+            <!-- Approach followed here is roughly the same as mentioned here:
+            https://maven.apache.org/plugins/maven-checkstyle-plugin/examples/multi-module-config.html
+            -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <version>${maven.checkstyle.version}</version>
+            <dependencies>
+                <dependency>
+                    <groupId>com.puppycrawl.tools</groupId>
+                    <artifactId>checkstyle</artifactId>
+                    <version>${checkstyle.version}</version>
+                </dependency>
+            </dependencies>
+            <configuration>
+                <configLocation>src/main/resources/${checkstyle.xml}</configLocation>
+            </configuration>
+        </plugin>
+      </plugins>
+    </build>
+</project>
